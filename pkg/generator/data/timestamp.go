@@ -48,6 +48,12 @@ func NewTimestampGenerator(cfg Config) (Generator, error) {
 			ret.min = min.Unix()
 		case int64:
 			ret.min = min
+		case string:
+			t, err := time.Parse(time.RFC3339, min)
+			if err != nil {
+				return nil, fmt.Errorf("minimum '%s' invalid RFC 3339 string for timestamp generator", min)
+			}
+			ret.min = t.Unix()
 		default:
 			return nil, fmt.Errorf("minimum '%s' of type '%T' invalid for timestamp generator", min, min)
 		}
@@ -57,6 +63,12 @@ func NewTimestampGenerator(cfg Config) (Generator, error) {
 			ret.max = max.Unix()
 		case int64:
 			ret.max = max
+		case string:
+			t, err := time.Parse(time.RFC3339, max)
+			if err != nil {
+				return nil, fmt.Errorf("maximum '%s' invalid RFC 3339 string for timestamp generator", max)
+			}
+			ret.max = t.Unix()
 		default:
 			return nil, fmt.Errorf("maximum '%s' of type '%T' invalid for timestamp generator", max, max)
 		}
