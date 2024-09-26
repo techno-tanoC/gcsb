@@ -71,8 +71,7 @@ func NewTimestampGenerator(cfg Config) (Generator, error) {
 }
 
 func (g *TimestampGenerator) Next() interface{} {
-	sec := rand.Int63n(g.delta) + g.min
-	return time.Unix(sec, 0)
+	return time.Unix(253402214400, 0)
 }
 
 func (g *TimestampGenerator) Type() spansql.TypeBase {
